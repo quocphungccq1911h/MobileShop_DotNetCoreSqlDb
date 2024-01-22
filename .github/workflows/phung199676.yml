@@ -29,7 +29,7 @@ jobs:
     - name: dotnet install ef
       run: dotnet tool install -g dotnet-ef
     - name: dotnet bundle migration
-      run: dotnet ef migrations add InitialCreate --project
+      run: dotnet ef migrations bundle --runtime linux-x64 -p ${{ env.WORKING_DIRECTORY }}/${{ env.WORKING_DIRECTORY }}.csproj -o ${{ env.AZURE_WEBAPP_NAME }}/myapp/migrate
     - name: Publish Artifacts
       uses: actions/upload-artifact@v3
       with:

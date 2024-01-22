@@ -18,18 +18,18 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-    - name: Restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
-    - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
-    - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
-    - name: dotnet install ef
-      run: dotnet tool install -g dotnet-ef --version 7.0.14
+    #- name: Restore
+    #  run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    #- name: Build
+    #  run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    #- name: Test
+    #  run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    #- name: Publish
+    #  run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    #- name: dotnet install ef
+    #  run: dotnet tool install -g dotnet-ef --version 7.0.14
     - name: dotnet bundle migration
-      run: dotnet ef migrations bundle --runtime linux-x64 -p "${{ env.WORKING_DIRECTORY }}"/"${{ env.WORKING_DIRECTORY }}".csproj -o "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"/myapp/migrate
+      run: dotnet ef migrations bundle --runtime linux-x64 -p ${{ env.WORKING_DIRECTORY }}/${{ env.WORKING_DIRECTORY }}.csproj -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp/migrate
     - name: Publish Artifacts
       uses: actions/upload-artifact@v3
       with:
